@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  10 OCT 2022 19:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.10)  10 OCT 2022 19:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **proposal.tex
-(./proposal/proposal.tex
+(./proposal.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24>
 (/usr/local/texlive/2022basic/texmf-dist/tex/latex/base/article.cls
@@ -289,8 +289,7 @@ ef
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box52
-)
-No file proposal.aux.
+) (./proposal.aux)
 \openout1 = `proposal.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -311,6 +310,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
 LaTeX Font Info:    ... okay on input line 14.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -393,6 +393,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 14.
 LaTeX Info: Redefining \pageref on input line 14.
 LaTeX Info: Redefining \nameref on input line 14.
+ (./proposal.out) (./proposal.out)
 \@outlinefile=\write3
 \openout3 = `proposal.out'.
 
@@ -416,25 +417,19 @@ ined on input line 25.
 [1
 
 {/usr/local/texlive/2022basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-No file proposal.bbl.
+(./proposal.bbl)
 
 Package natbib Warning: There were undefined citations.
 
 [2] (./proposal.aux)
-
-Package rerunfilecheck Warning: File `proposal.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `proposal.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  AC98A57B354ADA17515E11199D494767;732.
+Package rerunfilecheck Info: File `proposal.out' has not changed.
+(rerunfilecheck)             Checksum: AC98A57B354ADA17515E11199D494767;732.
  ) 
 Here is how much of TeX's memory you used:
- 9691 strings out of 479719
- 151882 string characters out of 5880573
- 451985 words of memory out of 5000000
- 27587 multiletter control sequences out of 15000+600000
+ 9706 strings out of 479719
+ 152037 string characters out of 5880573
+ 452213 words of memory out of 5000000
+ 27595 multiletter control sequences out of 15000+600000
  472133 words of font info for 38 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  60i,6n,63p,695b,327s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -442,10 +437,10 @@ Here is how much of TeX's memory you used:
 2.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mr12.pfb></usr/local/texlive/2022basic/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr17.pfb>
-Output written on proposal.pdf (2 pages, 47641 bytes).
+Output written on proposal.pdf (2 pages, 48173 bytes).
 PDF statistics:
- 40 PDF objects out of 1000 (max. 8388607)
- 29 compressed objects within 1 object stream
+ 59 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  9 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 49 words of extra memory for PDF output out of 10000 (max. 10000000)
 
