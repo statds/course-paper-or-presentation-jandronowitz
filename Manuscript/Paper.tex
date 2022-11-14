@@ -75,7 +75,7 @@ An output of the data is below:
 
 \begin{center}
 \includegraphics[width=5in]{Manuscript/figure1.pdf}
-\includegraphics[width=5in]{figure2.pdf}
+\includegraphics[width=5in]{Manuscript/figure2.pdf}
 \end{center}
 
 \noindent
@@ -144,19 +144,13 @@ y2015=y2015.astype('float64')
 \noindent
 Now that we have standardized data across the board, we can plot the life expectancy and basic drinking water.
 
-\vspace{-130pt}
-
 \begin{center}
-\includegraphics[width=6in]{figure3.pdf}\\
+\includegraphics[width=6in]{Manuscript/figure3.pdf}\\
 \end{center}
-
-\vspace{-160pt}
 
 \begin{center}
     \textit{Figure 1.}
 \end{center}
-
-\vspace{20pt}
 
 \noindent
 Now we create our data matrix $x$, which is the $x$ array transformed into a column vector and appended to a column of ones.
@@ -193,19 +187,13 @@ f2015.line(x=x2015.ravel(),y=Yhat2015[:,0],color='black')
 show(f2015)
 \end{lstlisting}
 
-\vspace{-130pt}
-
 \begin{center}
-\includegraphics[width=6in]{figure4.pdf}
+\includegraphics[width=6in]{Manuscript/figure4.pdf}\\
 \end{center}
-
-\vspace{-160pt}
 
 \begin{center}
     \textit{Figure 2.}
 \end{center}
-
-\vspace{20pt}
 
 \section*{Assumptions}
 
@@ -237,13 +225,9 @@ def comparison_plot(x,Y, Yhat):
 show(comparison_plot(x2015.ravel(),Y2015[:,0], Yhat2015[:,0]))
 \end{lstlisting}
 
-\vspace{-40pt}
-
 \begin{center}
-\includegraphics[width=4in]{figure5.pdf}
+\includegraphics[width=4in]{Manuscript/figure5.pdf}\\
 \end{center}
-
-\vspace{-50pt}
 
 \begin{center}
     \textit{Figure 3.}
@@ -263,13 +247,9 @@ Next, we would like to check for normality among the residuals. This can be achi
 p = sns.displot(residuals,kde=True)
 \end{lstlisting}
 
-\vspace{-150pt}
-
 \begin{center}
-    \includegraphics[width=6in]{figure6.pdf}
+    \includegraphics[width=6in]{Manuscript/figure6.pdf}\\
 \end{center}
-
-\vspace{-160pt}
 
 \begin{center}
 \textit{Figure 4.}
