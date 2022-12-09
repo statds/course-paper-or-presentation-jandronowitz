@@ -7,11 +7,12 @@
 \usepackage{natbib}
 \usepackage[colorlinks=true, citecolor=blue]{hyperref}
 \usepackage{listings}
-\usepackage{minted}
+\usepackage{setspace}
 \usepackage{hyperref}
 
 \parindent=0pt
 \parskip=\bigskipamount
+\onehalfspacing
 
 \title{Using Linear Regression to Examine the Correlation Between Access to Drinking Water and Life Expectancy}
 \author{Julia Andronowitz\\B.S., Mathematics and Statistics}
@@ -55,7 +56,7 @@ The second data set is called Life Expectancy at Birth and contains information 
 
 For the regression model, we start by loading the libraries that we will need. These include the Numpy, Pandas, and Bokeh libraries.
 
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     import numpy as np
     import pandas as pd
     import seaborn as sns
@@ -64,18 +65,18 @@ For the regression model, we start by loading the libraries that we will need. T
     from bokeh.models import ColumnDataSource, HoverTool
     from bokeh.layouts import gridplot
     output_notebook()
-\end{minted}
+\end{lstlisting}
 
 Next, we import the data:
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     rawData1=pd.read_csv('archive/basicDrinkingWaterServices.csv')
     rawData2=pd.read_csv('archive/lifeExpectancyAtBirth.csv')
-\end{minted}
+\end{lstlisting}
 
 If we would like to see the data, use the command
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     rawData1
-\end{minted}
+\end{lstlisting}
 
 An output of the data is in Figures ~\ref{fig1} and ~\ref{fig2}.
 \begin{figure}
@@ -91,59 +92,59 @@ An output of the data is in Figures ~\ref{fig1} and ~\ref{fig2}.
     \label{fig2}
 \end{figure}
 For the drinking water data, we take only the columns with the country, year, and the percentage of the population using at least basic drinking water services.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     rawData1=rawData1[["Location", "Period" , "First Tooltip"]]
-\end{minted}
+\end{lstlisting}
 
 We do the same for the life expectancy data, only taking the columns with the country, year, sex, and average life expectancy at birth.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     rawData2=rawData2[["Location", "Period", "Dim1", "First Tooltip"]]
-\end{minted}
+\end{lstlisting}
 
 Next, we want to convert our pandas dataframes into numpy arrays so that we can use the appropriate mathematical functions.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     data1=np.array(rawData1)
     data2=np.array(rawData2)
-\end{minted}
+\end{lstlisting}
 
 We want to have as many constants as possible in our model. Since the data was collected starting in 2000, we must use the same years in both data sets. We will use the year 2015 as the benchmark. The data can then be filtered using a loop and appending the 2015 data to a new list.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     dw2015=[]
     for x in data1:
         if x[1]==2015:
             dw2015.append(x)
-\end{minted}
+\end{lstlisting}
 
 This must be done for both data sets. We now do it for the life expectancy data set. As previously mentioned in the "Data" section, we also want to use only the rows with both sexes.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     le2015=[]
     for x in data2:
         if (x[1]==2015) and (x[2]=='Both sexes'):
             le2015.append(x)
-\end{minted}
+\end{lstlisting}
 
 These lists will also be converted into numpy arrays.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     DW2015=np.array(dw2015)
     lifeExpectancy2015=np.array(le2015)
-\end{minted}
+\end{lstlisting}
 
 Now, we see the shapes of both these arrays are different. The drinking water array contains 193 rows and 3 columns while the life expectancy array contains 183 rows and 4 columns. This means that there are some countries that are not in both lists. So, we need to delete the data for countries that are only in one or the other. We do this by checking if the countries in the drinking water array are also in the life expectancy data. If both countries are in both data sets, we append them to our new drinking water list, which is what we will use going forward.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     drinkingWater2015=[]
     for x in DW2015:
         if x[0] in lifeExpectancy2015:
             drinkingWater2015.append(x)
     drinkingWater2015=np.array(drinkingWater2015)
-\end{minted}
+\end{lstlisting}
 
 Now, we can see the lists are the same length. If the lengths were still different, we could do the same process with the life expectancy list, i.e. making sure every country in the life expectancy list is also in the drinking water list and removing elements that are not. Next, we want to assign $x$ to the percentages of people with access to basic drinking water services and $y$ to the life expectancies in 2015.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     x2015=drinkingWater2015[:,2]
     x2015=x2015.astype('float64')
     y2015=lifeExpectancy2015[:,3]
     y2015=y2015.astype('float64')
-\end{minted}
+\end{lstlisting}
 
 Now that we have standardized data across the board, we can plot the life expectancy and basic drinking water. The output is shown in Figure ~\ref{fig3}.
 \begin{figure}
@@ -154,35 +155,35 @@ Now that we have standardized data across the board, we can plot the life expect
 \end{figure}
 
 Now we create our data matrix $x$, which is the $x$ array transformed into a column vector and appended to a column of ones.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     x2015=x2015.reshape(-1,1)
     X2015=np.concatenate([x2015,np.ones(shape=(x2015.shape[0],1))],axis=1)
-\end{minted}
+\end{lstlisting}
 
 Since this is now a column vector, we also want to transform $y$ into a column vector.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     Y2015=y2015.reshape(-1,1)
-\end{minted}
+\end{lstlisting}
 
 Now, we can compute the least squares line and the matrix $M$ that will give us the slope and the $y$-intercept for the line of best fit.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     D2015=X2015.transpose()@X2015
     np.linalg.inv(D2015)
     M2015=(np.linalg.inv(D2015)@X2015.transpose())@Y2015
-\end{minted}
+\end{lstlisting}
 
 The output is the array $[[0.27859093],[49.15736534]]$, which tells us the slope of the line is 0.279 and the intercept is 49.157. If we want to compare the actual values to predicted values, we use the following code:
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     Yhat2015 = np.dot(np.dot(np.dot(X2015,np.linalg.inv(D2015)),
                                     X2015.transpose()),Y2015)
-\end{minted}
+\end{lstlisting}
 
 A visual representation of the least squares line can be seen once executing
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     f2015.line(x=x2015.ravel(),y=Yhat2015[:,0],color='black')
     show(f2015)
-\end{minted}
-The output is shown in Figure ~\ref{fig4}
+\end{lstlisting}
+The output is shown in Figure ~\ref{fig4}.
 \begin{figure}
     \centering
     \includegraphics[width=4in]{Figures/figure2.png}
@@ -193,18 +194,18 @@ The output is shown in Figure ~\ref{fig4}
 \section*{Assumptions}
 
 As seen in Figure ~\ref{fig3}, we can assume a linear regression is appropriate for the model based on the data. There looks to be a linear correlation between the variables rather than a quadratic or other polynomial relationship. To see the R-Squared value of our linear regression, we can use the following code \citep{pythonr2}:
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     corr_matrix = np.corrcoef(Y2015[:,0], Yhat2015[:,0])
     corr = corr_matrix[0,1]
     R_sq = corr**2
-\end{minted}
+\end{lstlisting}
 We see the $R^2$ value is 0.66348. So, 66.348\% of the variability in the data is explained by the model. While this is on the lower end, our model is still supported. We would also like to check that the mean of the residuals is close to zero. This can be calculated with the following code.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     residuals=Yhat2015[:,0]-Y2015[:,0]
     np.mean(residuals)
-\end{minted}
+\end{lstlisting}
 We see the mean is -1.2813065726821479e-14 which is very close to zero. We also need to check for homosteadasticity among the residuals. To look at the residuals, the difference between the measured and predicted values, we can use the following function as detailed in \citet{teitelbaum2021linreg}.
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     def comparison_plot(x,Y, Yhat):
         '''Plots Predicted vs True values for analysis of regression'''
         comparison_plot = 
@@ -215,7 +216,7 @@ We see the mean is -1.2813065726821479e-14 which is very close to zero. We also 
         comparison_plot.line(x=[x.min(),x.max()],y=[0,0])
         return comparison_plot
     show(comparison_plot(x2015.ravel(),Y2015[:,0], Yhat2015[:,0]))
-\end{minted}
+\end{lstlisting}
 
 \begin{figure}
     \centering
@@ -228,9 +229,9 @@ In Figure ~\ref{fig5}, we see there are no patterns among the residuals, so this
 
 Next, we would like to check for normality among the residuals. This can be achieved by plotting the distribution \citep{kaggleassumptions}.
 
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     p = sns.displot(residuals,kde=True)
-\end{minted}
+\end{lstlisting}
 
 \begin{figure}
     \centering
@@ -243,7 +244,7 @@ We see the graph in Figure ~\ref{fig6} is slightly bimodal but almost normally d
 
 Finally, we look at possible outliers. The following code will calculate the studentized residuals and print values that are outside the normal range of (-3,3) \citep{statologyresiduals}.
 
-\begin{minted}{python}
+\begin{lstlisting}[language=Python]
     df = pd.DataFrame({'x': x2015[:,0],
                        'y': Y2015[:,0]})
     model = ols('x ~ y', data=df).fit()
@@ -252,9 +253,9 @@ Finally, we look at possible outliers. The following code will calculate the stu
     for x in stud_res['student_resid']:
         if x > 3 or x < -3:
             print(x)
-\end{minted}
+\end{lstlisting}
 
-We see there is one outlier, with a studentized residual of -3.160. This outlier should be removed from the data set.
+Running the code, we see there is one outlier with a studentized residual of -3.160. This outlier should be removed from the data set.
 
 \section{Results}
 
@@ -268,7 +269,7 @@ From Figure 2 with the resulting best fit line, we see that some points are very
 
 These results highlight the importance for access to clean drinking water, as we saw a positive correlation between access to safe water and life expectancy. We also saw some variation in the residuals, meaning that the model predicted a different outcome than the data points observed. The level of variation is a discrepancy between the predicted life expectancy of the model and the actual observed life expectancy from the data. This most likely has to do with the varying factors among different countries including other health factors such as air quality, sanitation, living conditions, and political stability. More conclusive research would have to be done to verify this. Possible methods such as multivariate regression and an analysis of covariance could be done. It is known that a person's health is affected by many factors, and a complete study to analyze just how much effect each factor has would be extensive. Though a study of this scale is improbable for this paper, such findings could revolutionize what public health organizations, governments, and citizens prioritize in relation to their health. This type of study has far-reaching effects and could not only improve a person's life expectancy but also their quality of life.
 
-This research paper focuses on investigating the effect of a population's access to clean drinking water on their life expectancy. We have found a positive correlation between the variables, which supports existing research that clean water is essential for the body to function. Insights in this field can further promote the basic right to safe water and highlight just how important water is in human health.
+Studies regarding drinking water have been done to draw conclusions about the presence of certain diseases when clean drinking water is limited. Research revolves around specific diseases or access to clean drinking water based on a scale. This research paper focuses on investigating the effect of the proportion of a population's access to clean drinking water on their life expectancy - a more widespread conclusion than those regarding specific water-borne illnesses. We have found a positive correlation between the variables, which supports existing research that clean water is essential for the body to function, yet expands the relationship to overall life expectancy. Insights in this field can further promote the basic right to safe water and highlight just how important water is in human health.
 
 \newpage
 
